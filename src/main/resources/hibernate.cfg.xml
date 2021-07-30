@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+	
+		<property name="hibernate.connection.driver_class">
+			org.postgresql.Driver
+		</property>
+		
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.PostgreSQLDialect
+		</property>
+		
+		<property name="hibernate.connection.url">
+			jdbc:postgresql://
+		</property>
+		
+		<property name="hibernate.connection.username">
+			username
+		</property>
+		
+		<property name="hibernate.connection.password">
+			password
+		</property>
+		
+		<!-- Optional -->
+		<property name="show_sql">
+			true
+		</property>
+	
+<!-- 	
+		<property name="hbm2ddl.auto">
+			validate
+		</property> 
+-->
+		
+		<!-- Class Mappings -->
+		<mapping class="dev.bahner.models.Employee" />
+		<mapping class="dev.bahner.models.Supervisor" />
+		<mapping class="dev.bahner.models.BenefitsCoordinator" />
+		<mapping class="dev.bahner.models.Course" />
+		<mapping class="dev.bahner.models.ReimburseForm" />
+		
+	</session-factory>
+</hibernate-configuration>

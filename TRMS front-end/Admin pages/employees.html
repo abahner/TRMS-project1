@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Employee - Manager</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/CSS" href="style2.css">
+
+</head>
+
+<body id="empPage">
+
+    <h1>Employee Manager</h1>
+    <br>
+    <hr>
+
+    <div id="getEmp">
+
+        <br>
+        <h2>Get Employee by Id</h2>
+        <br>
+
+        <input id ="id" type ="number" value="0">
+        <button onclick="getEmployee()">Get Employee</button>
+        <br>
+        <p id="getResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="putForm">
+
+        <h2>Update Employee</h2>
+
+        <label>Id:</label>
+        <input id="putId" type="number">
+        <br>
+
+        <label>Username:</label>
+        <input id="putUName" type="text">
+        <br>
+
+        <label>Password:</label>
+        <input id="putPass" type="text">
+        <br>
+
+        <label>Email:</label>
+        <input id="putEmail" type="text">
+        <br>
+
+        <label>Role:</label>
+        <input id="putRole" type="text">
+        <br>
+
+        <label>Reimbursed Amount:</label>
+        <input id="putRAmt" type="number">
+        <br>
+
+        <label>Courses:</label>
+        <input id="putCourses" type="text">
+        <br>
+
+        <button onclick="putEmployee()">Update Employee</button>
+        <p id="putResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="delEmployee">
+
+        <h2>Delete Employee</h2>
+        <input id="delId" type="number">
+
+        <button onclick="deleteEmployee()">Delete Employee</button>
+        <p id="delResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="postForm">
+
+        <h2>Add Employee</h2>
+
+        <label>Username:</label>
+        <input id="postUName" type="text">
+        <br>
+
+        <label>Password:</label>
+        <input id="postPass" type="text">
+        <br>
+
+        <label>Email:</label>
+        <input id="postEmail" type="text">
+        <br>
+
+        <label>Role:</label>
+        <input id="postRole" type="text">
+        <br>
+
+        <label>Reimbursed Amount:</label>
+        <input id="postRAmt" type="text">
+
+        <button onclick="addEmployee()">Add Employee</button>
+        <p id="postResult"></p>
+
+    </div>
+
+</body>
+
+
+<script>
+
+function getEmployee() {
+
+    console.log("Getting Employee");
+
+    let id = document.getElementById("id").value;
+    console.log(`Getting Employee with the ID of: ${id}`);
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if(this.readyState == 4 & this.status == 200) {
+            console.log(this.responseText);
+            if(JSON.parse(this.responseText != '{}')){
+                let employee = JSON.parse(this.responseText);
+                popResult(employee);
+            } else {
+                document.getElementById("getResult").innerHTML = "Invalid or Undefined ID.";
+            }
+        }
+    };
+
+    url = `http://localhost:7000/employees/${id}`;
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    function popResult(employee) {
+
+        let result = document.getElementById("getResult");
+        result.innerHTML = '';
+
+        let idNode = document.createElement("h3");
+        let uNameNode = document.createElement("h3");
+        let passNode = document.createElement("h3");
+        let emailNode = document.createElement("h3");
+        let roleNode = document.createElement("h3");
+        let reimbursedAmtNode = document.createElement("h3");
+        let coursesNode = document.createElement("h3");
+
+        idNode.innerHTML = "ID: " + employee.id;
+        uNameNode.innerHTML = "Username: " + employee.username;
+        passNode.innerHTML = "Password: " + employee.password;
+        emailNode.innerHTML = "Email: " + employee.email;
+        roleNode.innerHTML = "Role: " + employee.role;
+        reimbursedAmtNode.innerHTML = "Reimbursed Amount: " + employee.reimbursedAmt;
+
+        let courses = JSON.stringify(employee.courses);
+        coursesNode.innerHTML = "Courses: <br>" + courses;
+
+        result.appendChild(idNode);
+        result.appendChild(uNameNode);
+        result.appendChild(passNode);
+        result.appendChild(emailNode);
+        result.appendChild(roleNode);
+        result.appendChild(reimbursedAmtNode);
+        result.appendChild(coursesNode);
+
+
+    }
+
+}
+
+function putEmployee() {
+
+    console.log("Updating Employee");
+
+    let putId = document.getElementById("putId").value;
+    let putUName = document.getElementById("putUName").value;
+    let putPass = document.getElementById("putPass").value;
+    let putEmail = document.getElementById("putEmail").value;
+    let putRole = document.getElementById("putRole").value;
+    let putRAmt = document.getElementById("putRAmt").value;
+    let putCourses = document.getElementById("putCourses").value;
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            if (JSON.parse(this.responseText != "")) {
+                document.getElementById("putResult").innerHTML = "Employee updated!"
+            } else {
+                document.getElementById("putResult").innerHTML = "Employee was not updated..."
+            } 
+        } else if (this.readyState == 4) {
+            document.getElementById("putResult").innerHTML = "Put request failed."
+        }
+    }
+
+    let url = `http://localhost:7000/employees/${putId}`;
+    xhr.open("PUT", url, true);
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    let employee = {
+        id: putId,
+        username: putUName,
+        password: putPass,
+        email: putEmail,
+        reimbursedAmt: putRAmt,
+        role: putRole,
+        // courses: putCourses,
+    }
+
+    xhr.send(JSON.stringify(employee))
+
+}
+
+function deleteEmployee() {
+
+    console.log("Deleting employee...");
+
+    let id = document.getElementById("delId").value;
+    console.log(`Deleting Employee with the ID of: ${id}`);
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if(this.readyState == 4 & this.status == 200) {
+            console.log(this.responseText);
+            let employee = JSON.parse(this.responseText);
+        }
+        document.getElementById("delResult").innerHTML = "Employee deleted!"
+    };
+
+    url = `http://localhost:7000/employees/${id}`;
+    xhr.open("DELETE", url, true);
+    xhr.send();
+
+}
+
+function addEmployee() {
+
+console.log("Adding Employee")
+
+let postUName = document.getElementById("postUName").value;
+let postPass = document.getElementById("postPass").value;
+let postEmail = document.getElementById("postEmail").value;
+let postRole = document.getElementById("postRole").value;
+let postRAmt = document.getElementById("postRAmt").value;
+
+let xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 & this.status == 200) {
+        console.log(this.responseText);
+
+        if (JSON.parse(this.responseText != "")) {
+            document.getElementById("postResult").innerHTML = "Employee successfully added!"
+        } else {
+            document.getElementById("postResult").innerHTML = "Employee was not added!"
+        }
+    } else if (this.readyState == 4) {
+        document.getElementById("postResult").innerHTML = "Request failed."
+    }
+
+}
+
+let url = "http://localhost:7000/employees";
+xhr.open("POST", url, true);
+
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+let employee = {
+username: postUName,
+password: postPass,
+email: postEmail,
+role: postRole,
+reimbursedAmt: postRAmt
+}
+
+xhr.send(JSON.stringify(employee));
+
+}
+
+</script>
+
+</html>

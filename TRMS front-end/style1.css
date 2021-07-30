@@ -1,0 +1,77 @@
+
+#loginPage {
+    background-color: #b6a19e;
+    text-align: center;
+    padding: 10px;
+    margin: 70px 25% 70px 25%;
+    border: 3px solid #6c648b;
+}
+
+#loginInput {
+    text-align: center;
+    width: 350px;
+}
+
+#empPage {
+    background-color: #b6a19e;
+}
+
+#supPage {
+    background-color: #b6a19e;
+}
+
+#bencoPage {
+    padding: 25px 50px 125px 50px;
+    background-color: #b6a19e;
+}
+
+#rform1 {
+    color: #6c648b;
+}
+
+#empTable {
+    width: 26%;
+    margin: 50px 50px 50px 37%;
+}
+
+#userTab {
+    width: 26%;
+    margin: 50px 50px 50px 37%;
+    padding-top: 5px
+    
+}
+
+#rformInput {
+    margin: 0px 50px 50px 41%;
+    border: 2px solid #6c648b;
+    width: 400px;
+    padding: 20px;
+}
+
+#rformInput2 {
+    margin: 100px 0px 20px 200px;
+    border: 2px solid black;
+    width: 400px;
+    padding: 20px;
+}
+
+#supTab{
+    text-align: center;
+}
+
+#getResult2{
+    border: 2px dashed black; 
+    padding: 25px;
+}
+
+#getResult3{
+    border: 2px dashed black; 
+    padding: 25px;
+}
+
+#rFormPop {
+    border: 2px dashed rgb(255, 0, 0); 
+    padding: 10px;
+}
+
+

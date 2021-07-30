@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>TRMS - Supervisor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/CSS" href="style1.css">
+
+</head>
+
+<!-- this function gets the supervisor account information by the username used to log in-->
+<body onload="getSupervisor() ,  getReimbursement()" id="supPage">
+ 
+    <h1 style="text-align: center; margin: 35px;">Tuition Reimbursement Management - Supervisor</h1>
+    <hr>
+
+    <div id="supTab">
+
+        <h3>Account details:</h3>
+        <p id="getResult" style="margin: 25px 35% 25px 35%; border: 2px solid blue; padding: 35px;"></p>
+        <hr>
+
+    </div>
+    <div class="container">
+        <div class="row row-cols-2">
+            <div class="col">
+                <hr>
+                <h3>Employee:</h3> 
+                <table class="table table-info table-striped table-bordered table-hover">
+
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">Employee ID:</td>
+                            <td id="rform1empid"></td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td id="rform1empUname"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td id="rform1empEmail"></td>
+                        </tr>
+                        <tr>
+                            <td>Reimbursal amount:</td>
+                            <td id="rform1empAmt"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <button id="rFormApproval" class="btn btn-light btn-lg" onclick="rForm1Approve()" style="background-color: #6BBAA7;">Approve</button>
+                <button id="rFormDenial" class="btn btn-light btn-lg" onclick="rForm1Deny()" style="background-color: #fba100;">Deny</button>
+                <label id="updateRform1" style="margin: 15px"></label>
+
+            </div>
+            <div class="col">
+                <hr>
+                <h3>Reimbursement Form:</h3>
+                <table class="table table-primary table-striped table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">Rreimbursement ID: </td>
+                            <td id="rform1id"></td>
+                        </tr>
+                        <tr>
+                            <td>Datetime submitted: </td>
+                            <td id="rform1date"></td>
+                        </tr>
+                        <tr>
+                            <td>Location:</td>
+                            <td id="rform1locale"></td>
+                        </tr>
+                        <tr>
+                            <td>Description:</td>
+                            <td id="rform1desc"></td>
+                        </tr>
+                        <tr>
+                            <td>Cost:</td>
+                            <td id="rform1cost"></td>
+                        </tr>
+                        <tr>
+                            <td>Event Type:</td>
+                            <td id="rform1type"></td>
+                        </tr>
+                        <tr>
+                            <td>Grade Format:</td>
+                            <td id="rform1grade"></td>
+                        </tr>
+                        <tr>
+                            <td>Supervisor Approved?:</td>
+                            <td id="rform1approval"></td>
+                        </tr>
+                        <tr>
+                            <td>Benefit Coordinator Approved?</td>
+                            <td id="rform1bencoapproval"></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                    
+            </div>
+            <div class="col">
+                <hr>
+                <h3>Employee:</h3> 
+                <table class="table table-info table-striped table-bordered table-hover">
+
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">Employee ID:</td>
+                            <td id="rform2empid"></td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td id="rform2empUname"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td id="rform2empEmail"></td>
+                        </tr>
+                        <tr>
+                            <td>Reimbursal amount:</td>
+                            <td id="rform2empAmt"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <button id="approval2"class="btn btn-light btn-lg" onclick="rForm2Approve()" style="background-color: #6BBAA7;">Approve</button>
+                <button id="denial2"class="btn btn-light btn-lg" onclick="rForm2Deny()" style="background-color: #fba100;">Deny</button>
+                <label id="updateRform2" style="margin: 15px"></label>     
+
+            </div>
+            <div class="col">
+                <hr>
+                <h3>Reimbursement Form:</h3>
+                <table class="table table-primary table-striped table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">Rreimbursement ID: </td>
+                            <td id="rform2id"></td>
+                        </tr>
+                        <tr>
+                            <td>Datetime submitted: </td>
+                            <td id="rform2date"></td>
+                        </tr>
+                        <tr>
+                            <td>Location:</td>
+                            <td id="rform2locale"></td>
+                        </tr>
+                        <tr>
+                            <td>Description:</td>
+                            <td id="rform2desc"></td>
+                        </tr>
+                        <tr>
+                            <td>Cost:</td>
+                            <td id="rform2cost"></td>
+                        </tr>
+                        <tr>
+                            <td>Event Type:</td>
+                            <td id="rform2type"></td>
+                        </tr>
+                        <tr>
+                            <td>Grade Format:</td>
+                            <td id="rform2grade"></td>
+                        </tr>
+                        <tr>
+                            <td>Supervisor Approved?:</td>
+                            <td id="rform2approval"></td>
+                        </tr>
+                        <tr>
+                            <td>Benefit Coordinator Approved?</td>
+                            <td id="rform2bencoapproval"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <h3 style="margin: 50px 25px 25px 42%">Submit Reimbursement Form:</h3>
+
+    <div id="rformInput2" style="margin: 50px 25px 40px 42%;">
+        <h4 style="text-align: center;">Reimbursement Form</h4>
+        <hr>
+        <label>Location:</label>
+        <input id="location" type="text" class="form-control" style="margin-bottom: 20px;">
+
+        <label>Description:</label>
+        <input id="description" type="text" class="form-control" style="margin-bottom: 20px;">
+
+        <label>Cost:</label>
+        <input id="cost" type="number" class="form-control" style="margin-bottom: 20px;">
+
+        <label>Grading Format:</label>
+        <input id="gradeFormat" type="text" class="form-control" style="margin-bottom: 20px;">
+
+        <label>Event Type:</label>
+        <input id="eventType" type="text" class="form-control" style="margin-bottom: 20px;">
+
+        <button class="btn-dark" onclick="postRForm()">Submit</button>
+        <label id="postResult"></label>
+    </div>
+
+</body>
+
+<script>
+
+
+function getReimbursement(){
+
+
+    console.log("Getting Reimbursement Forms");
+    
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if(this.readyState == 4 & this.status == 200) {
+             console.log(`Looping through array...`);
+
+            if(JSON.parse(this.responseText != '{}')) {
+                rForms = JSON.parse(this.responseText);
+               // Looping though the reimbursment forms table to find to corresponding employee ID
+                employees = supervisor.employees;
+
+                rFormResult = [];
+                for (let i = 0; i < employees.length; i++) {
+                    rForms.forEach(Element => (Element.employee.id == employees[i].id) ?
+                    rFormResult.push(Element):
+                    console.log("looping"));
+                }
+                console.log(rFormResult);
+
+                
+                // Rform 1
+               document.getElementById("rform1id").innerHTML = rFormResult[0].id;
+               document.getElementById("rform1date").innerHTML = rFormResult[0].dateTime;
+               document.getElementById("rform1locale").innerHTML = rFormResult[0].locale;
+               document.getElementById("rform1desc").innerHTML = rFormResult[0].description;
+               document.getElementById("rform1cost").innerHTML = rFormResult[0].cost;
+               document.getElementById("rform1type").innerHTML = rFormResult[0].eventType;
+               document.getElementById("rform1grade").innerHTML = rFormResult[0].gradeFormat;
+               document.getElementById("rform1approval").innerHTML = rFormResult[0].isApproved;
+               document.getElementById("rform1bencoapproval").innerHTML = rFormResult[0].bencoApproved;
+
+               // Employee 1
+               document.getElementById("rform1empid").innerHTML = JSON.stringify(rFormResult[0].employee.id);
+               document.getElementById("rform1empUname").innerHTML = JSON.stringify(rFormResult[0].employee.username);
+               document.getElementById("rform1empEmail").innerHTML = JSON.stringify(rFormResult[0].employee.email);
+               document.getElementById("rform1empAmt").innerHTML = JSON.stringify('$' + rFormResult[0].employee.reimbursedAmt);
+
+                // Rform 2
+               document.getElementById("rform2id").innerHTML =rFormResult[1].id;
+               document.getElementById("rform2date").innerHTML = rFormResult[1].dateTime;
+               document.getElementById("rform2locale").innerHTML = rFormResult[1].locale;
+               document.getElementById("rform2desc").innerHTML = rFormResult[1].description;
+               document.getElementById("rform2cost").innerHTML =rFormResult[1].cost;
+               document.getElementById("rform2type").innerHTML = rFormResult[1].eventType;
+               document.getElementById("rform2grade").innerHTML = rFormResult[1].gradeFormat;
+               document.getElementById("rform2approval").innerHTML = rFormResult[1].isApproved;
+               document.getElementById("rform2bencoapproval").innerHTML = rFormResult[1].bencoApproved;
+
+               // Employee 2
+               document.getElementById("rform2empid").innerHTML = JSON.stringify(rFormResult[1].employee.id);
+               document.getElementById("rform2empUname").innerHTML = JSON.stringify(rFormResult[1].employee.username);
+               document.getElementById("rform2empEmail").innerHTML = JSON.stringify(rFormResult[1].employee.email);
+               document.getElementById("rform2empAmt").innerHTML = JSON.stringify('$' + rFormResult[1].employee.reimbursedAmt);
+            
+            } else {
+                console.log("Failed to get Reimbursement Form")
+            }
+        }
+
+    };
+
+    url = `http://localhost:7000/rforms/`
+    xhr.open("GET", url, true);
+    xhr.send();
+}
+
+function rForm1Approve() {
+
+    console.log("Approving Reimbursement Form...")
+
+    let rForm1id = document.getElementById("rform1id").innerHTML;
+    let rForm1Locale = document.getElementById("rform1locale").innerHTML;
+    let rForm1Desc = document.getElementById("rform1desc").innerHTML;
+    let rForm1Cost = document.getElementById("rform1cost").innerHTML;
+    let rForm1Grade = document.getElementById("rform1grade").innerHTML;
+    let rForm1Type = document.getElementById("rform1type").innerHTML;
+    let rForm1Emp = rFormResult[0].employee;
+
+    let xhr2 = new XMLHttpRequest();
+    xhr2.onreadystatechange = function() {
+        if (this.readyState == 4 & this.status == 200) {
+
+            if (JSON.parse(this.responseText != "")) {
+
+                if (reimburseForm.isApproved == false) {
+                    console.log(JSON.parse(this.responseText));
+
+                } else {
+                    document.getElementById("updateRform1").innerHTML = "Approval Submited"
+                }
+            } else {
+                console.log("Reimbursement Form was not updated!")
+            }
+        } else if (this.readyState == 4) {
+            console.log(this.status)
+        }
+    }
+
+    let url = `http://localhost:7000/rforms/${rForm1id}`;
+    xhr2.open("PUT", url, true);
+
+    xhr2.setRequestHeader('Content-Type', 'application/json');
+
+    let reimburseForm = {
+        id: rForm1id,
+        locale: rForm1Locale,
+        description: rForm1Desc,
+        cost: rForm1Cost,
+        gradeFormat: rForm1Grade,
+        eventType: rForm1Type,
+        employee: rForm1Emp,
+        isApproved: true,
+        bencoApproved: rFormResult[0].bencoApproved
+    }
+
+    xhr2.send(JSON.stringify(reimburseForm));
+
+    document.getElementById("rform1approval").innerHTML = JSON.stringify(reimburseForm.isApproved)
+
+}
+
+function rForm1Deny() {
+
+    console.log("Denying Reimbursement Form")
+
+    let rForm1id = document.getElementById("rform1id").innerHTML;
+    let rForm1Locale = document.getElementById("rform1locale").innerHTML;
+    let rForm1Desc = document.getElementById("rform1desc").innerHTML;
+    let rForm1Cost = document.getElementById("rform1cost").innerHTML;
+    let rForm1Grade = document.getElementById("rform1grade").innerHTML;
+    let rForm1Type = document.getElementById("rform1type").innerHTML;
+    let rForm1Emp = rFormResult[0].employee;
+
+    let xhr2 = new XMLHttpRequest();
+    xhr2.onreadystatechange = function() {
+        if (this.readyState == 4 & this.status == 200) {
+
+            if (JSON.parse(this.responseText != "")) {
+
+                if (reimburseForm.isApproved == true) {
+
+                } else {
+                    document.getElementById("updateRform1").innerHTML = "Denied Reimbursement"
+                }
+            } else {
+                console.log("Reimbursement Form was not updated!")
+            }
+        } else if (this.readyState ==4) {
+            console.log(this.status)
+        }
+    }
+
+    let url = `http://localhost:7000/rforms/${rForm1id}`;
+    xhr2.open("PUT", url, true);
+
+    xhr2.setRequestHeader('Content-Type', 'application/json');
+
+    let reimburseForm = {
+        id: rForm1id,
+        locale: rForm1Locale,
+        description: rForm1Desc,
+        cost: rForm1Cost,
+        gradeFormat: rForm1Grade,
+        eventType: rForm1Type,
+        employee: rForm1Emp,
+        isApproved: false,
+        bencoApproved: rFormResult[0].bencoApproved
+    }
+
+    xhr2.send(JSON.stringify(reimburseForm));
+
+    document.getElementById("rform1approval").innerHTML = JSON.stringify(reimburseForm.isApproved)
+
+}
+
+function rForm2Approve() {
+
+    console.log("Approving Reimbursement Form...")
+
+    let rForm2id = document.getElementById("rform2id").innerHTML;
+    let rForm2Locale = document.getElementById("rform2locale").innerHTML;
+    let rForm2Desc = document.getElementById("rform2desc").innerHTML;
+    let rForm2Cost = document.getElementById("rform2cost").innerHTML;
+    let rForm2Grade = document.getElementById("rform2grade").innerHTML;
+    let rForm2Type = document.getElementById("rform2type").innerHTML;
+    let rForm2Emp = rFormResult[1].employee;
+
+    let xhr2 = new XMLHttpRequest();
+    xhr2.onreadystatechange = function() {
+        if (this.readyState == 4 & this.status == 200) {
+
+            if (JSON.parse(this.responseText != "")) {
+
+                if (reimburseForm.isApproved == false) {
+
+                } else {
+                    document.getElementById("updateRform2").innerHTML = "Approval Submitted"
+                }
+            } else {
+                console.log("Reimbursement Form was not updated!")
+            }
+        } else if (this.readyState == 4) {
+            console.log(this.status)
+        }
+    }
+
+    let url = `http://localhost:7000/rforms/${rForm2id}`;
+    xhr2.open("PUT", url, true);
+
+    xhr2.setRequestHeader('Content-Type', 'application/json');
+
+    let reimburseForm = {
+        id: rForm2id,
+        locale: rForm2Locale,
+        description: rForm2Desc,
+        cost: rForm2Cost,
+        gradeFormat: rForm2Grade,
+        eventType: rForm2Type,
+        employee: rForm2Emp,
+        isApproved: true,
+        bencoApproved: rFormResult[1].bencoApproved
+    }
+
+    xhr2.send(JSON.stringify(reimburseForm));
+
+    document.getElementById("rform2approval").innerHTML = JSON.stringify(reimburseForm.isApproved);
+
+}
+
+function rForm2Deny() {
+
+    console.log("Denying Reimbursement Form")
+
+    let rForm2id = document.getElementById("rform2id").innerHTML;
+    let rForm2Locale = document.getElementById("rform2locale").innerHTML;
+    let rForm2Desc = document.getElementById("rform2desc").innerHTML;
+    let rForm2Cost = document.getElementById("rform2cost").innerHTML;
+    let rForm2Grade = document.getElementById("rform2grade").innerHTML;
+    let rForm2Type = document.getElementById("rform2type").innerHTML;
+    let rForm2Emp = rFormResult[1].employee;
+
+
+    let xhr2 = new XMLHttpRequest();
+    xhr2.onreadystatechange = function() {
+        if (this.readyState == 4 & this.status == 200) {
+
+            if (JSON.parse(this.responseText != "")) {
+
+                if (reimburseForm.isApproved == true) {
+
+                } else {
+                    document.getElementById("updateRform2").innerHTML = "Denied Approval"
+                }
+            } else {
+                console.log("Reimbursement Form was not updated!")
+            }
+        } else if (this.readyState == 4) {
+            console.log(this.status)
+        }
+    }
+
+    let url = `http://localhost:7000/rforms/${rForm2id}`;
+    xhr2.open("PUT", url, true);
+
+    xhr2.setRequestHeader('Content-Type', 'application/json');
+
+    let reimburseForm = {
+        id: rForm2id,
+        locale: rForm2Locale,
+        description: rForm2Desc,
+        cost: rForm2Cost,
+        gradeFormat: rForm2Grade,
+        eventType: rForm2Type,
+        employee: rForm2Emp,
+        isApproved: false,
+        bencoApproved: rFormResult[1].bencoApproved
+    }
+
+    xhr2.send(JSON.stringify(reimburseForm));
+
+    document.getElementById("rform2approval").innerHTML = JSON.stringify(reimburseForm.isApproved);
+
+}
+
+    
+</script>
+
+<script src="getSup.js"></script>
+<script src="addRForm.js"></script>
+
+<!-- <script src="getRForm.js"></script> -->
+
+
+</html>

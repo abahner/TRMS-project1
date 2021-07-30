@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Supervisor - Manager</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/CSS" href="style2.css">
+
+
+</head>
+
+<body id="supPage">
+    
+    <h1>Supervisor Manager</h1>
+    <br>
+    <hr>
+
+    <div id="getSup">
+
+        <br>
+        <h2>Get Supervisor By Id</h2>
+        <br>
+
+        <input id="id" type="number" value="0">
+        <button onclick="getSupervisor()">Get Supervisor</button>
+        <br>
+        <p id="getResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="putForm">
+
+        <h2>Update Supervisor</h2>
+
+        <label>Id:</label>
+        <input id="putId" type="number">
+        <br>
+
+        <label>Username:</label>
+        <input id="putUName" type="text">
+        <br>
+
+        <label>Password:</label>
+        <input id="putPass" type="text">
+        <br>
+
+        <label>Email:</label>
+        <input id="putEmail" type="text">
+        <br>
+
+        <label>Is Department Head? </label>
+        <input id="putDepHead" type="checkbox">
+        <br>
+
+        <label>Employees:</label>
+        <input id="putEmployees" type="text">
+        <br>
+
+        <button onclick="putSupervisor()">Update Supervisor</button>
+        <p id="putResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="delSupervisor">
+
+        <h2>Delete Supervisor</h2>
+        <input id="delId" type="number">
+
+        <button onclick="deleteSupervisor()">Delete Supervisor</button>
+        <p id="delResult"></p>
+
+    </div>
+
+    <hr>
+
+    <div id="postForm">
+
+        <h2>Add Supervisor</h2>
+
+        <label>Username:</label>
+        <input id="postUName" type="text">
+        <br>
+
+        <label>Password:</label>
+        <input id="postPass" type="text">
+        <br>
+
+        <label>Email:</label>
+        <input id="postEmail" type="text">
+        <br>
+
+        <label>Is Department Head?</label>
+        <input id="postDepHead" type="checkbox">
+        <br>
+
+        <button onclick="addSupervisor()">Add Supervisor</button>
+        <p id="postResult"></p>
+
+    </div>
+
+</body>
+
+
+<script>
+
+function getSupervisor() {
+
+    console.log("Getting Supervisor");
+
+    let id = document.getElementById("id").value;
+    console.log(`Getting Supervisor with the ID of: ${id}`);
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if(this.readyState == 4 & this.status == 200) {
+            console.log(this.responseText);
+            let supervisor = JSON.parse(this.responseText);
+            popResult(supervisor);
+        } else {
+            document.getElementById("getResult").innerHTML = "Invalid or Undefined ID.";
+        }
+    };
+
+    url = `http://localhost:7000/supervisors/${id}`;
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    function popResult(supervisor) {
+
+        let result = document.getElementById("getResult");
+        result.innerHTML = '';
+
+        let idNode = document.createElement("h3");
+        let uNameNode = document.createElement("h3");
+        let passNode = document.createElement("h3");
+        let emailNode = document.createElement("h3");
+        let depHeadNode = document.createElement("h3");
+        let employeesNode = document.createElement("h3");
+
+        idNode.innerHTML = "ID: " + supervisor.id;
+        uNameNode.innerHTML = "Username: " + supervisor.username;
+        passNode.innerHTML = "Password: " + supervisor.password;
+        emailNode.innerHTML = "Email: " + supervisor.email;
+        depHeadNode.innerHTML = "Department Head: " + supervisor.depHead;
+
+        let employees = JSON.stringify(supervisor.employees);
+        employeesNode.innerHTML = "Employees: <br>" + employees;
+
+        result.appendChild(idNode);
+        result.appendChild(uNameNode);
+        result.appendChild(passNode);
+        result.appendChild(emailNode);
+        result.appendChild(depHeadNode);
+        result.appendChild(employeesNode);
+    }
+
+}
+
+function putSupervisor() {
+
+    console.log("Updating Supervisor");
+
+    let putId = document.getElementById("putId").value;
+    let putUName = document.getElementById("putUName").value;
+    let putPass = document.getElementById("putPass").value;
+    let putEmail = document.getElementById("putEmail").value;
+    let putDepHead = document.getElementById("putDepHead").value;
+    let putEmployees = document.getElementById("putEmployees").value;
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+
+            if (JSON.parse(this.responseText != "")) {
+                document.getElementById("putResult").innerHTML = "Supervisor updated!"
+            } else {
+                document.getElementById("putResult").innerHTML = "Supervisor was not updated..."
+            }
+        } else if (this.readyState == 4 ) {
+            document.getElementById("putResult").innerHTML = "Put request failed."
+        }
+    }
+
+    let url = `http://localhost:7000/supervisors/${putId}`;
+    xhr.open("PUT", url, true);
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    let supervisor = {
+        id: putId,
+        username: putUName,
+        password: putPass,
+        email: putEmail,
+        depHead: putDepHead,
+        // employees: putEmployees,
+    }
+
+    xhr.send(JSON.stringify(supervisor));
+
+}
+
+function deleteSupervisor() {
+    console.log("Deleting supervisor...");
+
+    let id = document.getElementById("delId").value;
+    console.log(`Deleting Supervisor with the ID of: ${id}`);
+
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+
+        if(this.readyState == 4 & this.status == 200) {
+            console.log(this.responseText);
+            let supervisor = JSON.parse(this.responseText);
+
+        }
+        document.getElementById("delResult").innerHTML = "Supervisor deleted!"
+    };
+
+    url = `http://localhost:7000/supervisors/${id}`;
+    xhr.open("DELETE", url, true);
+    xhr.send();
+}
+
+function addSupervisor() {
+
+console.log("Adding Supervisor...")
+
+let postUName = document.getElementById("postUName").value;
+let postPass = document.getElementById("postPass").value;
+let postEmail = document.getElementById("postEmail").value;
+let postDepHead = document.getElementById("postDepHead").value;
+
+let xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 & this.status == 200) {
+        console.log(this.responseText);
+
+        if (JSON.parse(this.responseText != "")) {
+            document.getElementById("postResult").innerHTML = "Supervisor successfully added!"
+        } else {
+            document.getElementById("postResult").innerHTML = "Supervisor was not added!"
+        }
+    } else if (this.readyState == 4) {
+        document.getElementById("postResult").innerHTML = "Request failed."
+    }
+
+}
+
+let url = "http://localhost:7000/supervisors";
+xhr.open("POST", url, true);
+
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+let supervisor = {
+username: postUName,
+password: postPass,
+email: postEmail,
+depHead: postDepHead
+}
+
+xhr.send(JSON.stringify(supervisor));
+
+}
+
+</script>
+
+
+</html>
